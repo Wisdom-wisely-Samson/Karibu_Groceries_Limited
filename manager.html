@@ -1,0 +1,91 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Manager - Add Produce</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <h2>Add Produce (Manager Only)</h2>
+      <form>
+        <div class="input-group">
+          <input
+            id="sProduce"
+            placeholder="Produce Name"
+            onkeyup="validateProduce()"
+          />
+          <span id="produce-error"></span>
+        </div>
+        <div class="input-group">
+          <input
+            id="type"
+            placeholder="Type (Beans, Maize...)"
+            onkeyup="validateProduceType()"
+          />
+          <span id="type-error"></span>
+        </div>
+        <div class="input-group">
+          <input
+            id="sTonnage"
+            type="number"
+            placeholder="Tonnage (kgs)"
+            onkeyup="validateTonnage()"
+          />
+          <span id="tonnage-error"></span>
+        </div>
+        <div class="input-group">
+          <input
+            id="cost"
+            type="number"
+            placeholder="Cost (UGX)"
+            onkeyup="validateCost()"
+          />
+          <span id="cost-error"></span>
+        </div>
+        <div class="input-group">
+          <input
+            id="price"
+            type="number"
+            placeholder="Selling Price"
+            onkeyup="validatePrice()"
+          />
+          <span id="price-error"></span>
+        </div>
+        <div class="input-group">
+          <input
+            id="dealer"
+            placeholder="Dealer Name"
+            onkeyup="validateDealerName()"
+          />
+          <span id="dealer-error"></span>
+        </div>
+        <div class="input-group">
+          <input id="contact" placeholder="Contact" onkeyup="validateContact()"/>
+          <span id="contact-error"></span>
+        </div>
+        <div class="input-group">
+          <input id="dueDate" type="date" />
+          <span id="dueDate-error"></span>
+        </div>
+        <div class="input-group">
+          <select id="branch">
+            <option>Maganjo</option>
+            <option>Matugga</option>
+          </select>
+        </div>
+      </form>
+
+      <button onclick="addProduce()">Save Produce</button>
+      <span id="error"></span>
+    </div>
+
+    <p id="msg"></p>
+
+    <script src="js files/app.js"></script>
+    <script src="js files/manager.js"></script>
+  </body>
+</html>

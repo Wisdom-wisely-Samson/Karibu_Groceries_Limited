@@ -1,0 +1,184 @@
+<!-- <!DOCTYPE html>
+<html>
+<head>
+  <title>KGL Dashboard</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+<div class="container">
+  <h2>Dashboard</h2>
+
+  <div class="dashboard">
+    <a id="managerCard" class="card" href="manager.html">
+      <i class="fas fa-warehouse"></i>
+      <h3>Manager</h3>
+      <p>Stock & Procurement</p>
+    </a>
+
+    <a id="salesCard" class="card" href="sales.html">
+      <i class="fas fa-cash-register"></i>
+      <h3>Sales</h3>
+      <p>Sell Produce</p>
+    </a>
+
+    <a id="creditCard" class="card" href="credit.html">
+      <i class="fas fa-handshake"></i>
+      <h3>Credit Sales</h3>
+      <p>Deferred Payments</p>
+    </a>
+
+    <a id="directorCard" class="card" href="director.html">
+      <i class="fas fa-chart-line"></i>
+      <h3>Director</h3>
+      <p>Reports & Charts</p>
+    </a>
+  </div>
+
+  <button onclick="logout()">Logout</button>
+</div>
+
+<script src="js/app.js"></script>
+</body>
+</html> -->
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Admin Dashboard</title>
+
+    <link rel="stylesheet" href="css/dashboard.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+  </head>
+
+  <body>
+    <div class="dashboard">
+      <!-- ================= SIDEBAR ================= -->
+      <aside class="sidebar">
+        <h2 class="logo">Admin</h2>
+
+        <nav>
+          <ul>
+            <li class="active"><i class="fa fa-home"></i> Dashboard</li>
+            <li><i class="fa fa-users"></i> Users</li>
+            <li><i class="fa fa-chart-line"></i> Analytics</li>
+            <li><i class="fa fa-box"></i> Products</li>
+            <li><i class="fa fa-cog"></i> Settings</li>
+          </ul>
+        </nav>
+      </aside>
+
+      <!-- ================= MAIN CONTENT ================= -->
+      <main class="main">
+        <!-- TOP BAR -->
+        <header class="topbar">
+          <h1>Dashboard</h1>
+
+          <div class="profile">
+            <i class="fa fa-bell"></i>
+            <img src="https://i.pravatar.cc/40" alt="User profile" />
+          </div>
+        </header>
+
+        <!-- ================= DASHBOARD LINKS ================= -->
+        <section class="container">
+          <h1>KGL Management System</h1>
+
+          <div class="dashboard-links">
+            <a href="manager.html" class="nav-card">
+              <i class="fas fa-warehouse"></i>
+              <h3>Manager</h3>
+              <p>Procurement & Stock</p>
+            </a>
+
+            <a href="sales.html" class="nav-card">
+              <i class="fas fa-cash-register"></i>
+              <h3>Sales Agent</h3>
+              <p>Sell Produce</p>
+            </a>
+
+            <a href="credit.html" class="nav-card">
+              <i class="fas fa-handshake"></i>
+              <h3>Credit Sales</h3>
+              <p>Deferred Payments</p>
+            </a>
+
+            <a href="director.html" class="nav-card">
+              <i class="fas fa-chart-line"></i>
+              <h3>Director</h3>
+              <p>Reports & Totals</p>
+            </a>
+          </div>
+        </section>
+        
+
+        <!-- ================= STAT CARDS ================= -->
+        <section class="stat-cards">
+          <div class="stat-card">
+            <h3>Users</h3>
+            <p>1,245</p>
+          </div>
+
+          <div class="stat-card">
+            <h3>Revenue</h3>
+            <p>$12,400</p>
+          </div>
+
+          <div class="stat-card">
+            <h3>Orders</h3>
+            <p>320</p>
+          </div>
+
+          <div class="stat-card">
+            <h3>Growth</h3>
+            <p>+18%</p>
+          </div>
+        </section>
+
+        <!-- ================= TABLE ================= -->
+        <section class="table-section">
+          <h2>Recent Users</h2>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Status</th>
+                <th>Role</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr>
+                <td>John Doe</td>
+                <td>john@email.com</td>
+                <td class="active-status">Active</td>
+                <td>Admin</td>
+              </tr>
+
+              <tr>
+                <td>Mary Jane</td>
+                <td>mary@email.com</td>
+                <td class="inactive-status">Inactive</td>
+                <td>User</td>
+              </tr>
+
+              <tr>
+                <td>Alex Smith</td>
+                <td>alex@email.com</td>
+                <td class="active-status">Active</td>
+                <td>Editor</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>

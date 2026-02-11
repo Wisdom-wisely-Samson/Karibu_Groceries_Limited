@@ -1,0 +1,113 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Credit Sales</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <h2>Credit Sale</h2>
+
+      <form>
+        <div class="input-group">
+          <input
+            type="text"
+            id="buyer"
+            placeholder="Buyer Name"
+            onkeyup="validateBuyerName()"
+          />
+          <span id="buyer-error"></span>
+        </div>
+        <div class="input-group">
+          <input
+            id="nin"
+            placeholder="National ID (NIN)"
+            onkeyup="validateNIN()"
+          />
+          <span id="nin-error"></span>
+        </div>
+        <div class="input-group">
+          <input
+            id="location"
+            placeholder="Location"
+            onkeyup="validateLocation()"
+          />
+          <span id="location-error"></span>
+        </div>
+        <div class="input-group">
+          <input
+            id="contact"
+            placeholder="contact"
+            onkeyup="validateContact()"
+          />
+          <span id="contact-error"></span>
+        </div>
+        <div class="input-group">
+          <input
+            id="amountDue"
+            type="number"
+            placeholder="Amount Due"
+            onkeyup="validateAmountDue()"
+          />
+          <span id="amountDue-error"></span>
+        </div>
+        <div class="input-group">
+          <input
+            id="amount"
+            type="number"
+            placeholder="Amount Paid (UGX)"
+            onkeyup="validateAmount()"
+          />
+          <span id="amount-error"></span>
+        </div>
+        <div class="input-group">
+          <select id="cBranch">
+            <option>Maganjo</option>
+            <option>Matugga</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <input
+            type="text"
+            id="agent"
+            placeholder="Sales Agent Name"
+            onkeyup="validateAgentName()"
+          />
+          <span id="agent-error"></span>
+        </div>
+        <div class="input-group">
+          <input
+            id="sProduce"
+            placeholder="Produce Name"
+            onkeyup="validateProduce()"
+          />
+          <span id="produce-error"></span>
+        </div>
+        <div class="input-group">
+          <input
+            id="sTonnage"
+            type="number"
+            placeholder="Tonnage (kgs)"
+            onkeyup="validateTonnage()"
+          />
+          <span id="tonnage-error"></span>
+        </div>
+        <div class="input-group">
+          <input id="dueDate" type="date" onkeyup="validateDueDate()" />
+          <span id="dueDate-error"></span>
+        </div>
+      </form>
+
+      <button onclick="creditSale()">Save Credit Sale</button>
+      <span id="error"></span>
+    </div>
+    <p id="creditMsg"></p>
+
+    <script src="js files/app.js"></script>
+    <script src="js files/credit.js"></script>
+  </body>
+</html>

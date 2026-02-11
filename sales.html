@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Sales Agent</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <h2>Sell Produce</h2>
+      <form>
+        <div class="input-group">
+          <input
+            id="sProduce"
+            placeholder="Produce Name"
+            onkeyup="validateProduce()"
+          />
+          <span id="produce-error"></span>
+        </div>
+        <div class="input-group">
+          <input
+            id="sTonnage"
+            type="number"
+            placeholder="Tonnage (kgs)"
+            onkeyup="validateTonnage()"
+          />
+          <span id="tonnage-error"></span>
+        </div>
+        <div class="input-group">
+          <input
+            id="amount"
+            type="number"
+            placeholder="Amount Paid (UGX)"
+            onkeyup="validateAmount()"
+          />
+          <span id="amount-error"></span>
+        </div>
+        <div class="input-group">
+          <input
+            type="text"
+            id="buyer"
+            placeholder="Buyer Name"
+            onkeyup="validateBuyerName()"
+          />
+          <span id="buyer-error"></span>
+        </div>
+        <div class="input-group">
+          <input
+            type="text"
+            id="agent"
+            placeholder="Sales Agent Name"
+            onkeyup="validateAgentName()"
+          />
+          <span id="agent-error"></span>
+        </div>
+        <select id="sBranch">
+          <option>Maganjo</option>
+          <option>Matugga</option>
+        </select>
+      </form>
+
+      <button onclick="sellProduce()">Record Sale</button>
+      <span id="sale-error"></span>
+    </div>
+    <p id="saleMsg">Sale recorded successfully!</p>
+    <script src="js files/Sales.js"></script>
+    <script src="js files/app.js"></script>
+
+  </body>
+</html>

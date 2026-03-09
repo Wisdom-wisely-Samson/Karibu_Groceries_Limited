@@ -1,66 +1,158 @@
-const CreditSale = require("../models/CreditSale");
+const CreditSale = require("../models/creditsale");
 const Produce = require("../models/Produce");
-const asyncHandler = require("../middleware/asyncHandler");
 
-exports.createCreditSale = asyncHandler(async (req, res) => {
-  const { produce, tonnage, amountDue } = req.body;
+/**
+ * Helper to handle FIFO Stock Deduction
+ */
+const deductStockFIFO = async (produceName, branch, requiredTonnage) => {
+  const stocks = await Produce.find({
+    name: { $regex: new RegExp(`^${produceName}$`, "i") },
+    branch: { $regex: new RegExp(`^${branch}$`, "i") },
+    tonnage: { $gt: 0 },
+  }).sort({ createdAt: 1 });
 
-  if (!produce || !tonnage || !amountDue) {
-    res.status(400);
-    throw new Error("Missing required credit sale fields");
+  const totalAvailable = stocks.reduce((acc, s) => acc + s.tonnage, 0);
+  if (totalAvailable < requiredTonnage) return false;
+
+  let remainingToDeduct = requiredTonnage;
+  for (const stock of stocks) {
+    if (remainingToDeduct <= 0) break;
+
+    if (stock.tonnage <= remainingToDeduct) {
+      remainingToDeduct -= stock.tonnage;
+      stock.tonnage = 0;
+    } else {
+      stock.tonnage -= remainingToDeduct;
+      remainingToDeduct = 0;
+    }
+    await stock.save();
   }
+  return true;
+};
 
-  const stock = await Produce.findOne({ name: produce });
+// RECORD CREDIT SALE
+exports.recordCreditSale = async (req, res) => {
+  try {
+    const {
+      buyerName,
+      nationalId,
+      location,
+      contact,
+      amountDue,
+      amountPaid = 0,
+      produce,
+      tonnage,
+      dueDate,
+      agentName,
+      date = date|| new Date(),
+      time = new Date().toLocaleTimeString(),
+    } = req.body;
 
-  if (!stock) {
-    res.status(404);
-    throw new Error("Produce not found in stock");
+    const reqTonnage = Number(tonnage);
+    const paid = Number(amountPaid);
+    const totalDue = Number(amountDue);
+
+    // 1. Validations
+    if (paid > totalDue) {
+      return res
+        .status(400)
+        .json({ message: "Amount paid cannot exceed amount due" });
+    }
+
+    // 2. Deduct Stock (FIFO)
+    const stockUpdated = await deductStockFIFO(
+      produce,
+      req.user.branch,
+      reqTonnage,
+    );
+    if (!stockUpdated) {
+      return res.status(400).json({ message: "Insufficient stock available" });
+    }
+
+    // 3. Create Record
+    const recordedCreditSale = await CreditSale.create({
+      buyerName,
+      nationalId,
+      location,
+      contact,
+      amountDue: totalDue,
+      amountPaid: paid,
+      produce,
+      tonnage: reqTonnage,
+      dueDate,
+      agentName: agentName || req.user.username,
+      branch: req.user.branch,
+      status: paid >= totalDue ? "Paid" : "Pending",
+      date: date || new Date(),
+      time: time || new Date().toLocaleTimeString(),
+
+    });
+
+    res
+      .status(201)
+      .json({
+        message: "Credit sale recorded successfully",
+        recordedCreditSale,
+      });
+  } catch (error) {
+    console.error("Credit Sale Error:", error);
+    res.status(500).json({ message: "Server error recording credit sale" });
   }
+};
 
-  if (stock.tonnage < tonnage) {
-    res.status(400);
-    throw new Error("Insufficient stock for credit sale");
+// REPAY CREDIT
+exports.repayCredit = async (req, res) => {
+  try {
+    const credit = await CreditSale.findById(req.params.id);
+    if (!credit)
+      return res.status(404).json({ message: "Credit sale not found" });
+
+    const payment = Number(req.body.amount || 0);
+    credit.amountPaid += payment;
+
+    if (credit.amountPaid >= credit.amountDue) {
+      credit.status = "Paid";
+    }
+
+    await credit.save();
+    res.json({ message: "Repayment successful", credit });
+  } catch (error) {
+    res.status(500).json({ message: "Error processing repayment" });
   }
+};
 
-  stock.tonnage -= tonnage;
-  await stock.save();
-
-  const credit = new CreditSale(req.body);
-  await credit.save();
-
-  res.status(201).json({
-    success: true,
-    message: "Credit sale recorded successfully",
-    credit
-  });
-});
-
-exports.payCredit = asyncHandler(async (req, res) => {
-  const { creditId, amountPaid } = req.body;
-
-  if (!creditId || !amountPaid) {
-    res.status(400);
-    throw new Error("Credit ID and amount paid are required");
+// GET ALL CREDIT SALES (Filtered by Branch)
+exports.getCreditSales = async (req, res) => {
+  try {
+    const credits = await CreditSale.find({ branch: req.user.branch }).sort({
+      createdAt: -1,
+    });
+    res.json(credits);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
+};
 
-  const credit = await CreditSale.findById(creditId);
-
-  if (!credit) {
-    res.status(404);
-    throw new Error("Credit record not found");
+// UPDATE CREDIT SALE
+exports.updateCreditSale = async (req, res) => {
+  try {
+    const updated = await CreditSale.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true },
+    );
+    res.json(updated);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
+};
 
-  credit.amountPaid += amountPaid;
-
-  if (credit.amountPaid >= credit.amountDue) {
-    credit.status = "Paid";
+// DELETE CREDIT SALE
+exports.deleteCreditSale = async (req, res) => {
+  try {
+    await CreditSale.findByIdAndDelete(req.params.id);
+    res.json({ message: "Credit sale deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
-
-  await credit.save();
-
-  res.json({
-    success: true,
-    message: "Credit payment recorded",
-    credit
-  });
-});
+};

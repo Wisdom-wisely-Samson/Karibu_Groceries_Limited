@@ -29,7 +29,7 @@ try {
 }
 
 // 3. ROUTES
-app.use("/api/auth", require("./backend/routes/authroutes"));
+app.use("/api/auth", require("./backend/routes/authRoutes"));
 app.use("/api/produce", require("./backend/routes/produceRoutes"));
 app.use("/api/sales", require("./backend/routes/salesRoutes"));
 app.use("/api/reports", require("./backend/routes/reportRoutes"));

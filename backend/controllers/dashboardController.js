@@ -1,6 +1,6 @@
 const Produce = require("../models/Produce");
 const Sale = require("../models/Sale");
-const CreditSale = require("../models/creditsale");
+const CreditSale = require("../models/CreditSale");
 
 // ADMIN DASHBOARD
 exports.getAdminDashboard = async (req, res) => {

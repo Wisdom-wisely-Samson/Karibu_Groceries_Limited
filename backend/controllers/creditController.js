@@ -1,4 +1,4 @@
-const CreditSale = require("../models/creditsale");
+const CreditSale = require("../models/CreditSale");
 const Produce = require("../models/Produce");
 
 /**

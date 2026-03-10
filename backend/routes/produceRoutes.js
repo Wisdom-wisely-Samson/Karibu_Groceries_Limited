@@ -104,7 +104,7 @@ const {
   deleteProduce,
   getStock,
   getProduce,
-} = require("../controllers/producecontroller");
+} = require("../controllers/produceController");
 
 const { protect } = require("../middleware/authMiddleware");
 

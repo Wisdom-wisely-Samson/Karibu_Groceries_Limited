@@ -8,7 +8,6 @@ const userSchema = new mongoose.Schema({
     enum: ["Manager", "SalesAgent", "Director"],
   },
   branch: { type: String, required: true },
-  
 });
 
 module.exports = mongoose.model("User", userSchema);

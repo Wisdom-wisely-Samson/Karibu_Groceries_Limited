@@ -29,8 +29,8 @@ const creditSaleSchema = new mongoose.Schema(
       enum: ["Pending", "Paid"],
       default: "Pending",
     },
-    time : { type: String, required: true },
-     agentName: { type: String, required: true },
+    time: { type: String },
+    agentName: { type: String, required: true },
   },
   { timestamps: true },
 );

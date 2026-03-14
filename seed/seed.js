@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 require("dotenv").config();
-const User = require("../backend/models/user");
+const User = require("../backend/models/User");
 const Produce = require("../backend/models/Produce");
 const Sale = require("../backend/models/Sale");
 const CreditSale = require("../backend/models/creditsale");

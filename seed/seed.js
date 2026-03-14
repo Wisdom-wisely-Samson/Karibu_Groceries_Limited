@@ -4,7 +4,7 @@ require("dotenv").config();
 const User = require("../backend/models/User");
 const Produce = require("../backend/models/Produce");
 const Sale = require("../backend/models/Sale");
-const CreditSale = require("../backend/models/creditsale");
+const CreditSale = require("../backend/models/CreditSale");
 const MONGO_URI = process.env.MONGO_URI;
 mongoose.connect(MONGO_URI);
 

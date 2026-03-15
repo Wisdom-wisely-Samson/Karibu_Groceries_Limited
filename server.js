@@ -14,18 +14,27 @@ require("./backend/config/db");
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-//  GLOBAL MIDDLEWARE 
+//  GLOBAL MIDDLEWARE
 app.use(helmet());
-app.use(cors());
+app.use(
+  cors({
+    origin: "https://karibu-groceries-frontend-three.vercel.app",
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
+  }),
+);
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "public")));
 
 // 2. SWAGGER SETUP
 try {
-    const swaggerSpec = swaggerJsDoc(options);
-    app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+  const swaggerSpec = swaggerJsDoc(options);
+  app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 } catch (err) {
-    console.error("Swagger setup failed. Check your YAML indentation in route files!", err.message);
+  console.error(
+    "Swagger setup failed. Check your YAML indentation in route files!",
+    err.message,
+  );
 }
 
 // 3. ROUTES
